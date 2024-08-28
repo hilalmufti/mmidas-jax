@@ -1,3 +1,4 @@
+# %%
 from jax import grad, jit, vmap, random
 import jax.numpy as jnp
 from jax.scipy.special import logsumexp
@@ -7,9 +8,16 @@ from torch.utils import data
 from torchvision.datasets import MNIST
 from pyrsistent import pmap, pvector
 
+# %%
+print("hello")
+
+
+# %%
 def random_layer_params(m, n, k, scale=1e-2):
   kw, kb = random.split(k)
   return scale * random.normal(kw, (n, m)), scale * random.normal(kb, (n,))
+
+
 
 def init_network_params(szs, k):
   ks = random.split(k, len(szs))
@@ -58,3 +66,4 @@ rand_imgs = random.normal(random.key(547), (10, 28 * 28,))
 
 def numpy_collate(batch):
   return tree_map(np.asarray, data.default_collate(batch))
+# %%

@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run mmidas_jax",
+            "type": "shell",
+            "command": "uv run -- python -m mmidas_jax.main",
+            "problemMatcher": [],
+            "group": "none"
+        },
+        {
+            "label": "Test mmidas_jax",
+            "type": "shell",
+            "command": "uv run pytest",
+            "problemMatcher": [],
+            "group": "none"
+        },
+        {
+            "label": "Expect test mmidas_jax",
+            "type": "shell",
+            "command": "EXPECTTEST_ACCEPT=1 uv run pytest",
+            "problemMatcher": [],
+            "group": "none"
+        }
+    ]
+}
