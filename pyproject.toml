@@ -10,6 +10,7 @@ dependencies = [
     "expecttest>=0.2.1",
     "wheel>=0.44.0",
     "jax-metal>=0.1.0",
+    "pyrsistent>=0.20.0",
 ]
 
 [build-system]

@@ -1,5 +1,5 @@
 from expecttest import assert_expected_inline
-
+import jax
 import jax.numpy as jnp
 
 def inc(x):
@@ -14,3 +14,6 @@ def test_split():
 
 def test_jnp():
     assert_expected_inline(str(jnp.array([1, 2, 3])), """[1 2 3]""")
+
+def test_jax_devices():
+    assert_expected_inline(str(jax.devices()), """[METAL(id=0)]""")

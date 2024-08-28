@@ -1,4 +1,3 @@
-import jax
-
 def mnist_fun(x):
-    return x + 10
+    print("mnist fun called")
+    return x + 2
