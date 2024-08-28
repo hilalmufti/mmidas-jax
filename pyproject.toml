@@ -8,6 +8,8 @@ dependencies = [
     "numpy>=2.1.0",
     "pytest>=8.3.2",
     "expecttest>=0.2.1",
+    "wheel>=0.44.0",
+    "jax-metal>=0.1.0",
 ]
 
 [build-system]
