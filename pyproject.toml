@@ -11,6 +11,8 @@ dependencies = [
     "wheel>=0.44.0",
     "jax-metal>=0.1.0",
     "pyrsistent>=0.20.0",
+    "ipykernel>=6.29.5",
+    "pip>=24.2",
 ]
 
 [build-system]
