@@ -2,10 +2,10 @@ import os
 
 from expecttest import assert_expected_inline
 import jax
-from jax import random
+from jax import vmap, random
 import jax.numpy as jnp
 
-from mmidas_jax.mnist import mk_linear, mk_fc, relu
+from mmidas_jax.mnist import mk_linear, mk_fc, relu, predict, one_hot
 
 def inc(x):
     return x + 1
@@ -62,3 +62,30 @@ def test_relu():
 
 def test_random_img():
     assert_expected_inline(str(random.normal(random.key(1), (2 * 2,))), """[ 0.17269018 -0.46084192  1.2229712  -0.07101909]""")
+
+def test_predict():
+    sizes = [25, 16, 16, 10]
+    params = mk_fc(sizes, random.key(546))
+    rand_img = random.normal(random.key(1), (5 * 5,))
+    assert_expected_inline(str(predict(params, rand_img)), """\
+[-2.283712  -2.292692  -2.2976418 -2.3008618 -2.3222291 -2.284738
+ -2.2972484 -2.3109696 -2.315505  -2.321149 ]""")
+    
+def test_vmap_predict():
+    sizes = [25, 16, 16, 10]
+    params = mk_fc(sizes, random.key(546))
+    rand_imgs = random.normal(random.key(1), (3, 5 * 5,))
+    assert_expected_inline(str(vmap(predict, in_axes=(None, 0))(params, rand_imgs)), """\
+[[-2.2836628 -2.2927153 -2.2975929 -2.3008237 -2.3222744 -2.2847133
+  -2.2972975 -2.3109674 -2.3155422 -2.3211603]
+ [-2.2836435 -2.2926557 -2.2975886 -2.3007908 -2.322278  -2.2848015
+  -2.2972672 -2.3108952 -2.3156106 -2.3212194]
+ [-2.2836492 -2.292715  -2.2975817 -2.300823  -2.3222852 -2.2847633
+  -2.2972867 -2.3109424 -2.3155477 -2.3211565]]""")
+    
+def test_onehot():
+    assert_expected_inline(str(one_hot(jnp.array([1, 3, 5, 2]), 6)), """\
+[[0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 1.]
+ [0. 0. 1. 0. 0. 0.]]""")

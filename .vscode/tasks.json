@@ -2,21 +2,21 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run mmidas_jax",
+            "label": "Run",
             "type": "shell",
             "command": "ENABLE_PJRT_COMPATIBILITY=1 uv run -- python -m mmidas_jax.main",
             "problemMatcher": [],
             "group": "none"
         },
         {
-            "label": "Test mmidas_jax",
+            "label": "Test",
             "type": "shell",
             "command": "ENABLE_PJRT_COMPATIBILITY=1 uv run pytest",
             "problemMatcher": [],
             "group": "none"
         },
         {
-            "label": "Expect test mmidas_jax",
+            "label": "Expect test",
             "type": "shell",
             "command": "ENABLE_PJRT_COMPATIBILITY=1 EXPECTTEST_ACCEPT=1 uv run pytest",
             "problemMatcher": [],
