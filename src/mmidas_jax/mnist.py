@@ -77,6 +77,9 @@ def loss(params, imgs, targets):
 
 def update(params, x, y):
     grads = grad(loss)(params, x, y)
+    return grads
+
+update(params, rand_img, predict(params, rand_img))
 
 # %%
 
@@ -93,10 +96,3 @@ rand_imgs = random.normal(random.key(SEED + 1), (10, 28 * 28))
 batched_predict = vmap(predict, in_axes=(None, 0))
 
 batched_predict(params, rand_imgs)
-
-# %%
-
-def cols(xs):
-    return [[x] for x in xs]
-
-cols([[1, 2], [3, 4]])
