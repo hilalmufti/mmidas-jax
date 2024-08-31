@@ -77,7 +77,8 @@ def loss(params, imgs, targets):
 
 def update(params, x, y):
     grads = grad(loss)(params, x, y)
-    return grads
+    return [(w - step_size * dw, b - step_size * db)
+            for (w, b), (dw, db) in zip(params, grads)]
 
 update(params, rand_img, predict(params, rand_img))
 
