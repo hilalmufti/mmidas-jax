@@ -1,3 +1,4 @@
 {
-    "jupyter.interactiveWindow.textEditor.executeSelection": true
+    "jupyter.interactiveWindow.textEditor.executeSelection": true,
+    "python.analysis.typeCheckingMode": "basic"
 }
