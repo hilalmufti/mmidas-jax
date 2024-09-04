@@ -3,13 +3,15 @@ import os
 os.environ['ENABLE_PJRT_COMPATIBILITY'] = str(1)
 
 import math
-from typing import Iterable, TypeVar
+from typing import Iterable, TypeVar, Any
 import typing_extensions
 from collections.abc import Callable
 from functools import reduce
 
+import numpy as np
 from jax import grad, jit, vmap, random, Array
 import jax.numpy as jnp
+from jax.tree_util import tree_map
 from jax.scipy.special import logsumexp
 
 from pytrait import Trait, abstractmethod
@@ -20,8 +22,8 @@ key = random.key(SEED)
 # class Add[Rhs = Array]()
 
 # %%
-def starreduce[T, U](fun: Callable, seq: Iterable[T], init: U) -> U:
-    for x in iter(seq):
+def starreduce[T, *Ts, U](fun: Callable[[U, T, *Ts], U], seq: Iterable[tuple[T, *Ts]], init: U) -> U:
+    for x in seq:
         init = fun(init, *x)
     return init
 
@@ -87,6 +89,10 @@ def update(params, x, y, lr):
     grads = grad(loss)(params, x, y)
     return [(w - (lr * dw), b - (lr * db))
             for (w, b), (dw, db) in zip(params, grads)]
+
+# %%
+def numpy_collate(batch):
+  return tree_map(np.asarray, data.default_collate(batch))
 
 _y = batched_predict(params, rand_imgs)
 
